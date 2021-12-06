@@ -5,26 +5,14 @@ import { Button, FormControl } from "react-bootstrap";
 import ReadOnlyOptionItem from "../../components/ReadOnlyOptionItem";
 import axios from "axios";
 
-const testObj = {
-  pollId: "b2eda079-65c4-447f-a6fc-d82ae3832b35",
-  pollQuestion: "Test Poll",
-  pollOptions: [
-    {
-      id: "e69dac77-be11-4867-98f6-44817f1aae5b",
-      text: "Option 1",
-    },
-    {
-      id: "be14622a-495c-416c-aa6e-23a2c29c282b",
-      text: "Option 2",
-    },
-  ],
-};
-
+interface Option {
+  id: string;
+  text: string;
+  votes?: number;
+}
 const Poll = () => {
   const [question, setQuestion] = useState("");
-  const [options, setOptions] = useState<
-    [{ id: string; text: string; votes: number }]
-  >([]);
+  const [options, setOptions] = useState<Option[]>([]);
   const router = useRouter();
   const { id } = router.query;
   useEffect(() => {
