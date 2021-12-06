@@ -1,13 +1,11 @@
 import type { NextPage } from "next";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 const Home: NextPage = () => {
   const router = useRouter();
   const handleCreatePoll = () => {
-    const id = uuidv4();
-    router.push(`/polls/${id}`);
-    console.log({ id });
+    router.push(`/poll/create`);
   };
   return (
     <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">

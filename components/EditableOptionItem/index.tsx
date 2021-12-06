@@ -1,24 +1,45 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { StateContext } from "../../context";
+import { State } from "../../pages/poll/create";
+import { v4 as uuidv4 } from "uuid";
 
-const OptionItem = () => {
-  const stateContext = useContext(StateContext);
+const EditableOptionItem = ({ state, dispatch, id }) => {
   const [checked, setChecked] = useState(false);
   const [value, setValue] = useState("");
   const [remove, setRemove] = useState(false);
+  // const id = uuidv4();
+
   useEffect(() => {
-    stateContext.dispatch();
+    dispatch({
+      type: "ADD_POLL_OPTION",
+      payload: {
+        id,
+        text: "",
+      },
+    });
   }, []);
   function handleChange(e) {
     setValue(e.target.value);
+    dispatch({
+      type: "UPDATE_POLL_OPTION",
+      payload: {
+        id,
+        text: e.target.value,
+      },
+    });
   }
+
   function handleRemove() {
+    dispatch({
+      type: "REMOVE_POLL_OPTION",
+      payload: {
+        id,
+      },
+    });
     setRemove(true);
   }
   function handleCheck(e) {
     setChecked(e.target.checked);
-    console.log({ checked });
   }
   return (
     <>
@@ -37,4 +58,4 @@ const OptionItem = () => {
   );
 };
 
-export default OptionItem;
+export default EditableOptionItem;
