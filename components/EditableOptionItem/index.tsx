@@ -1,13 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useEffect } from "react";
 
-const EditableOptionItem = ({ state, dispatch, id }) => {
-  const [checked, setChecked] = useState(false);
+const EditableOptionItem = ({ dispatch, id }) => {
   const [value, setValue] = useState("");
   const [remove, setRemove] = useState(false);
-  // const id = uuidv4();
-
   useEffect(() => {
     dispatch({
       type: "ADD_POLL_OPTION",
@@ -16,6 +11,7 @@ const EditableOptionItem = ({ state, dispatch, id }) => {
         text: "",
       },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   function handleChange(e) {
     setValue(e.target.value);
@@ -37,21 +33,25 @@ const EditableOptionItem = ({ state, dispatch, id }) => {
     });
     setRemove(true);
   }
-  function handleCheck(e) {
-    setChecked(e.target.checked);
-  }
+
   return (
     <>
       {remove === false && (
-        <>
-          <InputGroup className="mb-2">
-            <InputGroup.Checkbox onChange={handleCheck} checked={checked} />
-            <FormControl value={value} onChange={handleChange} />
-            <Button variant="outline-danger" onClick={handleRemove}>
-              Delete
-            </Button>
-          </InputGroup>
-        </>
+        <div className="flex mb-3">
+          <input
+            autoFocus={true}
+            value={value}
+            onChange={handleChange}
+            type="text"
+            className="min-w-0 py-2 pl-5 text-2xl outline-none bg-light-purple rounded-tl-2xl rounded-bl-2xl placeholder-light-gray"
+          />
+          <button
+            onClick={handleRemove}
+            className="px-2 border-2 text-dark-red border-dark-red rounded-tr-2xl rounded-br-2xl bg-light-red"
+          >
+            Delete
+          </button>
+        </div>
       )}
     </>
   );

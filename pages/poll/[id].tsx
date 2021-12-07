@@ -18,6 +18,7 @@ const Poll = () => {
   const [submitPoll, setSubmitPoll] = useState(false);
   const [votedOptions, setVotedOptions] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const [fetchingData, setFetchingData] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
@@ -50,8 +51,11 @@ const Poll = () => {
   }
   return (
     <div className="h-screen min-h-full p-2">
-      <div className="flex flex-col mt-40">
-        <h1 className="m-1 mb-2 text-2xl font-bold text-center">{question}</h1>
+      <div className="flex flex-col ">
+        <h1 className="my-10 text-5xl font-normal text-center text-light-purple">
+          Easy Poll
+        </h1>
+        <p className="mb-10 text-2xl text-light-purple">{question}</p>
         {options.map((option) => (
           <ReadOnlyOptionItem
             key={option.id}
@@ -61,15 +65,16 @@ const Poll = () => {
             setVotedOptions={setVotedOptions}
           />
         ))}
+
         <button
           disabled={submitPoll}
           onClick={handleSubmitPoll}
-          className="inline-flex items-center px-4 py-2 mx-auto leading-6 text-white transition duration-150 ease-in-out bg-purple-600 border border-transparent rounded-md cursor-not-allowed hover:bg-purple-500 focus:border-purple-700 active:bg-purple-700"
+          className="inline-flex items-center px-3 py-2 mx-auto font-semibold leading-6 transition duration-150 ease-in-out cursor-not-allowed bg-select-green rounded-2xl"
         >
           {submitting ? (
             <>
               <svg
-                className="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+                className="w-5 h-5 mr-3 -ml-1 animate-spin"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"

@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
-import { Button, FormControl } from "react-bootstrap";
-import EditableOptionItem from "../../components/EditableOptionItem";
-import { useReducer } from "react";
-import { useEffect } from "react";
 import axios from "axios";
+import EditableOptionItem from "../../components/EditableOptionItem";
 interface PollOption {
   id: string;
   text: string;
@@ -76,16 +73,10 @@ const CreatePoll = () => {
   function handleAddOption() {
     setOptionList((prevState) => [
       ...prevState,
-      <EditableOptionItem
-        key={uuidv4()}
-        state={state}
-        dispatch={dispatch}
-        id={uuidv4()}
-      />,
+      <EditableOptionItem key={uuidv4()} dispatch={dispatch} id={uuidv4()} />,
     ]);
   }
   function handleDeployPoll() {
-    // Push stuff to database
     axios
       .post("/api/poll", {
         id: state.pollId,
@@ -94,23 +85,36 @@ const CreatePoll = () => {
       })
       .then((res) => console.log(res))
       .then(() => router.push(`/poll/${state.pollId}`));
-
-    console.log(state);
   }
   return (
-    <div className="p-2 d-flex flex-column min-vh-100 justify-content-center align-items-center">
-      <FormControl
+    <div className="flex flex-col min-h-screen px-2 pb-3">
+      <h1 className="my-10 text-5xl font-normal text-center text-light-purple">
+        Easy Poll
+      </h1>
+      <input
+        type="text"
+        name="poll-question"
+        className="py-[0.7rem] mb-10 pl-5 text-2xl outline-none bg-light-purple rounded-2xl placeholder-light-gray"
         placeholder="Poll Question"
-        className="mb-2"
+        autoComplete="off"
+        autoFocus={true}
         value={state.pollQuestion}
         onChange={handlePollQuestionOnChange}
       />
-      {optionList}
-      <div className="m-2">
-        <Button className="me-2" onClick={handleAddOption}>
+      <div className="flex-grow ">{optionList}</div>
+      <div className="flex justify-around">
+        <button
+          onClick={handleAddOption}
+          className="px-3 py-1 text-2xl font-semibold text-black transition-all duration-200 bg-light-purple rounded-2xl hover:bg-opacity-75 active:bg-opacity-50"
+        >
           Add Options
-        </Button>
-        <Button onClick={handleDeployPoll}>Deploy</Button>
+        </button>
+        <button
+          onClick={handleDeployPoll}
+          className="px-3 py-1 text-2xl font-semibold text-black transition-all duration-200 bg-light-purple rounded-2xl hover:bg-opacity-75 active:bg-opacity-50"
+        >
+          Deploy
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Button, FormControl, InputGroup } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 
 const ReadOnlyOptionItem = ({
   optionText,
@@ -8,27 +7,32 @@ const ReadOnlyOptionItem = ({
   setVotedOptions,
 }) => {
   const [checked, setChecked] = useState(false);
-  function handleCheck(e) {
-    setChecked(e.target.checked);
-    if (e.target.checked) {
+  useEffect(() => {
+    if (checked) {
       setVotedOptions([...votedOptions, optionId]);
     }
     // if option exists in votedOptions and is unchecked, remove it
     else {
       setVotedOptions(votedOptions.filter((option) => option !== optionId));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checked]);
+  function handleCheck() {
+    setChecked((prevState) => !prevState);
   }
   return (
     <>
-      <InputGroup className="mb-2">
-        <InputGroup.Checkbox onChange={handleCheck} checked={checked} />
-
-        <FormControl
-          style={{ cursor: "pointer" }}
-          defaultValue={optionText}
-          readOnly
-        />
-      </InputGroup>
+      <div className="flex mb-3" onClick={handleCheck}>
+        <span
+          style={{ background: `${checked ? "#9FFFAF" : "#D0D5FF"}` }}
+          className="flex items-center justify-center px-2 border-2 rounded-tl-2xl rounded-bl-2xl border-select-blue "
+        >
+          <input type="checkbox" className="w-5 h-5" checked={checked} />
+        </span>
+        <p className="w-full py-2 pl-5 text-2xl bg-light-purple rounded-tr-2xl rounded-br-2xl">
+          {optionText}
+        </p>
+      </div>
     </>
   );
 };
