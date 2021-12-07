@@ -17,6 +17,7 @@ const Poll = () => {
   const [options, setOptions] = useState<Option[]>([]);
   const [submitPoll, setSubmitPoll] = useState(false);
   const [votedOptions, setVotedOptions] = useState<string[]>([]);
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
@@ -36,10 +37,14 @@ const Poll = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady]);
   function handleSubmitPoll() {
-    // send stuff to server
+    if (votedOptions.length === 0) return;
     setSubmitPoll(true);
+    setSubmitting(true);
     votedOptions.forEach((option) => {
-      axios.patch("/api/poll?id=" + option).then((res) => console.log(res));
+      axios.patch("/api/poll?id=" + option).then((res) => {
+        console.log(res);
+        setSubmitting(false);
+      });
     });
     console.log(votedOptions);
   }
@@ -56,14 +61,39 @@ const Poll = () => {
             setVotedOptions={setVotedOptions}
           />
         ))}
-        <Button
-          variant="primary"
-          className="my-2"
+        <button
           disabled={submitPoll}
           onClick={handleSubmitPoll}
+          className="inline-flex items-center px-4 py-2 mx-auto leading-6 text-white transition duration-150 ease-in-out bg-purple-600 border border-transparent rounded-md cursor-not-allowed hover:bg-purple-500 focus:border-purple-700 active:bg-purple-700"
         >
-          Submit Poll
-        </Button>
+          {submitting ? (
+            <>
+              <svg
+                className="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Submitting...
+            </>
+          ) : (
+            "Submit Poll"
+          )}
+        </button>
       </div>
       {submitPoll && <PollResult pollId={id} />}
     </div>
