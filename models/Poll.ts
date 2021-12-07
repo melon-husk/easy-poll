@@ -13,6 +13,10 @@ const PollSchema = new mongoose.Schema({
     type: [OptionSchema],
     required: true,
   },
+  total_votes: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export default mongoose.models.Poll || mongoose.model("Poll", PollSchema);

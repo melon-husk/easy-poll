@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { State } from "../../pages/poll/create";
 import { v4 as uuidv4 } from "uuid";
 
 const EditableOptionItem = ({ state, dispatch, id }) => {

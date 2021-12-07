@@ -6,11 +6,11 @@ import EditableOptionItem from "../../components/EditableOptionItem";
 import { useReducer } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-export interface PollOption {
+interface PollOption {
   id: string;
   text: string;
 }
-export interface State {
+interface State {
   pollId: string;
   pollQuestion: string;
   pollOptions: PollOption[];

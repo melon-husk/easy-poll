@@ -1,20 +1,25 @@
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import { useContext, useEffect, useState } from "react";
-import { Button, FormControl } from "react-bootstrap";
+import { Button, FormControl, ProgressBar } from "react-bootstrap";
 import ReadOnlyOptionItem from "../../components/ReadOnlyOptionItem";
 import axios from "axios";
+import PollResult from "../../components/PollResult";
 
 interface Option {
   id: string;
   text: string;
-  votes?: number;
+  votes: number;
 }
+
 const Poll = () => {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState<Option[]>([]);
+  const [submitPoll, setSubmitPoll] = useState(false);
+  const [votedOptions, setVotedOptions] = useState<string[]>([]);
   const router = useRouter();
   const { id } = router.query;
+
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -30,19 +35,37 @@ const Poll = () => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady]);
-
+  function handleSubmitPoll() {
+    // send stuff to server
+    setSubmitPoll(true);
+    votedOptions.forEach((option) => {
+      axios.patch("/api/poll?id=" + option).then((res) => console.log(res));
+    });
+    console.log(votedOptions);
+  }
   return (
-    <div className="p-2 d-flex flex-column min-vh-100 justify-content-center align-items-center">
-      {/* <FormControl placeholder="Poll Question" className="mb-2" /> */}
-      <h1>{question}</h1>
-      {options.map((option) => (
-        <ReadOnlyOptionItem key={option.id} optionText={option.text} />
-      ))}
-      <Button variant="primary" className="my-2">
-        Submit Poll
-      </Button>
-      {/* <h5>Option 1: votes</h5>
-      <h5>Option 2: votes</h5> */}
+    <div className="h-screen min-h-full p-2">
+      <div className="flex flex-col mt-40">
+        <h1 className="m-1 mb-2 text-2xl font-bold text-center">{question}</h1>
+        {options.map((option) => (
+          <ReadOnlyOptionItem
+            key={option.id}
+            optionText={option.text}
+            optionId={option.id}
+            votedOptions={votedOptions}
+            setVotedOptions={setVotedOptions}
+          />
+        ))}
+        <Button
+          variant="primary"
+          className="my-2"
+          disabled={submitPoll}
+          onClick={handleSubmitPoll}
+        >
+          Submit Poll
+        </Button>
+      </div>
+      {submitPoll && <PollResult pollId={id} />}
     </div>
   );
 };

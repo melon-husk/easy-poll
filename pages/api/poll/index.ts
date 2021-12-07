@@ -35,6 +35,21 @@ export default async function handler(
         res.status(400).json({ success: false, error });
       }
       break;
+    case "PATCH":
+      try {
+        // Takes in id of the option and increments it by 1
+        const poll = await Poll.updateOne(
+          { "options.id": req.query.id },
+          {
+            $inc: { "options.$.votes": 1, total_votes: 1 },
+          }
+        );
+
+        res.status(200).json({ success: true, data: poll });
+      } catch (error) {
+        res.status(400).json({ success: false, error });
+      }
+      break;
     default:
       res.status(400).json({ success: false, error: "Method not allowed" });
       break;
