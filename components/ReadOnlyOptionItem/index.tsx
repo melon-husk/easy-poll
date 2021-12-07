@@ -27,7 +27,12 @@ const ReadOnlyOptionItem = ({
           style={{ background: `${checked ? "#9FFFAF" : "#D0D5FF"}` }}
           className="flex items-center justify-center px-2 border-2 rounded-tl-2xl rounded-bl-2xl border-select-blue "
         >
-          <input type="checkbox" className="w-5 h-5" checked={checked} />
+          <input
+            readOnly
+            type="checkbox"
+            className="w-5 h-5"
+            checked={checked}
+          />
         </span>
         <p className="w-full py-2 pl-5 text-2xl bg-light-purple rounded-tr-2xl rounded-br-2xl">
           {optionText}
