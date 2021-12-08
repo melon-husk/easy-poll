@@ -87,7 +87,7 @@ const CreatePoll = () => {
       .then(() => router.push(`/poll/${state.pollId}`));
   }
   return (
-    <div className="flex flex-col min-h-screen px-2 pb-3">
+    <div className="flex flex-col min-h-screen px-2 pb-3 mx-auto md:w-9/12">
       <h1 className="my-10 text-5xl font-normal text-center text-light-purple">
         Easy Poll
       </h1>

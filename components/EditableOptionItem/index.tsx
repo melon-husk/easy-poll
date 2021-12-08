@@ -43,7 +43,7 @@ const EditableOptionItem = ({ dispatch, id }) => {
             value={value}
             onChange={handleChange}
             type="text"
-            className="min-w-0 py-2 pl-5 text-2xl outline-none bg-light-purple rounded-tl-2xl rounded-bl-2xl placeholder-light-gray"
+            className="w-full min-w-0 py-2 pl-5 text-2xl outline-none bg-light-purple rounded-tl-2xl rounded-bl-2xl placeholder-light-gray"
           />
           <button
             onClick={handleRemove}

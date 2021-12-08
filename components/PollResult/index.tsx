@@ -22,7 +22,7 @@ const PollResult = ({ pollId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <table className="w-full ml-0 md:mx-auto md:w-[90%] ">
+    <table className="w-full ml-0  md:w-[90%] ">
       <tbody>
         {pollData.options.map((option) => (
           <tr key={option.id}>

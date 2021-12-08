@@ -50,7 +50,7 @@ const Poll = () => {
     console.log(votedOptions);
   }
   return (
-    <div className="h-screen min-h-full p-2">
+    <div className="h-screen min-h-full p-2 mx-auto md:w-9/12">
       <div className="flex flex-col ">
         <h1 className="my-10 text-5xl font-normal text-center text-light-purple">
           Easy Poll
@@ -69,7 +69,7 @@ const Poll = () => {
         <button
           disabled={submitPoll}
           onClick={handleSubmitPoll}
-          className="inline-flex items-center px-3 py-2 mx-auto font-semibold leading-6 transition duration-150 ease-in-out cursor-not-allowed bg-select-green rounded-2xl"
+          className="inline-flex items-center px-3 py-2 mx-auto mb-3 font-semibold leading-6 transition duration-150 ease-in-out cursor-not-allowed bg-select-green rounded-2xl hover:bg-opacity-75 active:bg-opacity-50"
         >
           {submitting ? (
             <>
