@@ -24,7 +24,7 @@ const Poll = () => {
 
   useEffect(() => {
     if (!router.isReady) return;
-
+    setFetchingData(true);
     axios
       .get("/api/poll/", {
         params: {
@@ -34,6 +34,7 @@ const Poll = () => {
       .then((res) => {
         setQuestion(res.data.data.question);
         setOptions(res.data.data.options);
+        setFetchingData(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady]);
@@ -55,16 +56,42 @@ const Poll = () => {
         <h1 className="my-10 text-5xl font-normal text-center text-light-purple">
           Easy Poll
         </h1>
-        <p className="mb-10 text-2xl text-light-purple">{question}</p>
-        {options.map((option) => (
-          <ReadOnlyOptionItem
-            key={option.id}
-            optionText={option.text}
-            optionId={option.id}
-            votedOptions={votedOptions}
-            setVotedOptions={setVotedOptions}
-          />
-        ))}
+        {fetchingData ? (
+          <div className="flex flex-col animate-pulse">
+            <div className="w-1/2 h-8 mb-4 text-2xl bg-purple-900 rounded"></div>
+            <div className="flex mb-3 cursor-pointer">
+              <span className="flex items-center justify-center px-2 transition duration-75 ease-in-out bg-purple-900 border-2 border-purple-800 rounded-tl-2xl rounded-bl-2xl">
+                <input readOnly type="checkbox" className="w-5 h-5" />
+              </span>
+              <div className="w-full h-12 py-2 pl-5 text-2xl transition duration-150 ease-in-out bg-purple-900 rounded-tr-2xl rounded-br-2xl hover:bg-opacity-75"></div>
+            </div>
+            <div className="flex mb-3 cursor-pointer">
+              <span className="flex items-center justify-center px-2 transition duration-75 ease-in-out bg-purple-900 border-2 border-purple-800 rounded-tl-2xl rounded-bl-2xl">
+                <input readOnly type="checkbox" className="w-5 h-5" />
+              </span>
+              <div className="w-full h-10 py-2 pl-5 text-2xl transition duration-150 ease-in-out bg-purple-900 rounded-tr-2xl rounded-br-2xl hover:bg-opacity-75"></div>
+            </div>
+            <div className="flex mb-3 cursor-pointer">
+              <span className="flex items-center justify-center px-2 transition duration-75 ease-in-out bg-purple-900 border-2 border-purple-800 rounded-tl-2xl rounded-bl-2xl">
+                <input readOnly type="checkbox" className="w-5 h-5" />
+              </span>
+              <div className="w-full h-10 py-2 pl-5 text-2xl transition duration-150 ease-in-out bg-purple-900 rounded-tr-2xl rounded-br-2xl hover:bg-opacity-75"></div>
+            </div>
+          </div>
+        ) : (
+          <>
+            <p className="mb-10 text-2xl text-light-purple">{question}</p>
+            {options.map((option) => (
+              <ReadOnlyOptionItem
+                key={option.id}
+                optionText={option.text}
+                optionId={option.id}
+                votedOptions={votedOptions}
+                setVotedOptions={setVotedOptions}
+              />
+            ))}
+          </>
+        )}
 
         <button
           disabled={submitPoll}
