@@ -24,8 +24,10 @@ const ReadOnlyOptionItem = ({
     <>
       <div className="flex mb-3 cursor-pointer" onClick={handleCheck}>
         <span
-          style={{ background: `${checked ? "#9FFFAF" : "#D0D5FF"}` }}
-          className="flex items-center justify-center px-2 border-2 rounded-tl-2xl rounded-bl-2xl border-select-blue "
+          style={{
+            background: `${checked ? "rgba(117, 125, 194,0.95)" : "#D0D5FF"}`,
+          }}
+          className="flex items-center justify-center px-2 transition duration-75 ease-in-out border-2 rounded-tl-2xl rounded-bl-2xl border-select-blue"
         >
           <input
             readOnly
