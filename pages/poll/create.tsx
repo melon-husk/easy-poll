@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import EditableOptionItem from "../../components/EditableOptionItem";
+import Button from "../../components/Button";
 interface PollOption {
   id: string;
   text: string;
@@ -114,38 +115,13 @@ const CreatePoll = () => {
           Add Options
         </button>
 
-        <button
+        <Button
+          text="Deploy"
+          loadingState={deploying}
+          loadingText="Deploying..."
           onClick={handleDeployPoll}
           className="inline-flex items-center px-3 py-1 text-2xl font-semibold text-black transition-all duration-200 cursor-not-allowed bg-light-purple rounded-2xl hover:bg-opacity-75 active:bg-opacity-50"
-        >
-          {deploying ? (
-            <>
-              <svg
-                className="w-5 h-5 mr-3 -ml-1 animate-spin"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              Deploying...
-            </>
-          ) : (
-            "Deploy"
-          )}
-        </button>
+        />
       </div>
     </div>
   );
