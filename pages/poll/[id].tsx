@@ -49,6 +49,9 @@ const Poll = () => {
     });
     console.log(votedOptions);
   }
+  function isValid() {
+    return votedOptions.length > 0;
+  }
   return (
     <div className="h-screen min-h-full p-2 mx-auto md:w-9/12">
       <div className="flex flex-col ">
@@ -96,8 +99,8 @@ const Poll = () => {
           loadingState={submitting}
           loadingText="Submitting"
           onClick={handleSubmitPoll}
-          disabled={submitPoll}
-          className="inline-flex items-center px-3 py-2 mx-auto mb-3 font-semibold leading-6 transition duration-150 ease-in-out cursor-not-allowed bg-select-green rounded-2xl hover:bg-opacity-75 active:bg-opacity-50"
+          disabled={!isValid()}
+          className="inline-flex items-center px-3 py-2 mx-auto mb-3 font-semibold leading-6 transition duration-150 ease-in-out bg-select-green rounded-2xl hover:bg-opacity-75 active:bg-opacity-50"
         />
       </div>
       {submitPoll && <PollResult pollId={id} />}

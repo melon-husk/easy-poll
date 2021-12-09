@@ -19,9 +19,10 @@ const Button = ({
 }: Props) => {
   return (
     <button
-      disabled={false || disabled}
+      disabled={disabled}
       onClick={onClick}
       className={className}
+      style={{ cursor: `${disabled ? "not-allowed" : "pointer"}` }}
     >
       {loadingState ? (
         <>

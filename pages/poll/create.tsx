@@ -19,7 +19,7 @@ const initialState: State = {
   pollOptions: [],
 };
 function reducer(state: State, action: any) {
-  console.log(state, action);
+  // console.log(state, action);
   switch (action.type) {
     case "SET_POLL_ID":
       return { ...state, pollId: action.payload };
@@ -90,6 +90,19 @@ const CreatePoll = () => {
       .then(() => setDeploying(false))
       .then(() => router.push(`/poll/${state.pollId}`));
   }
+  // check if question and options are filled
+  function isValid() {
+    console.log(
+      state.pollQuestion.length > 0 &&
+        state.pollOptions.length > 0 &&
+        state.pollOptions.every((option) => option.text.length > 0)
+    );
+    return (
+      state.pollQuestion.length > 0 &&
+      state.pollOptions.length > 0 &&
+      state.pollOptions.every((option) => option.text.length > 0)
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen px-2 pb-3 mx-auto md:w-9/12">
@@ -120,7 +133,8 @@ const CreatePoll = () => {
           loadingState={deploying}
           loadingText="Deploying..."
           onClick={handleDeployPoll}
-          className="inline-flex items-center px-3 py-1 text-2xl font-semibold text-black transition-all duration-200 cursor-not-allowed bg-light-purple rounded-2xl hover:bg-opacity-75 active:bg-opacity-50"
+          className="inline-flex items-center px-3 py-1 text-2xl font-semibold text-black transition-all duration-200 bg-light-purple rounded-2xl hover:bg-opacity-75 active:bg-opacity-50"
+          disabled={!isValid()}
         />
       </div>
     </div>
