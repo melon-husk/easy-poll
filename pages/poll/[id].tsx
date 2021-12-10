@@ -99,7 +99,7 @@ const Poll = () => {
           loadingState={submitting}
           loadingText="Submitting"
           onClick={handleSubmitPoll}
-          disabled={!isValid()}
+          disabled={!isValid() || submitPoll}
           className="inline-flex items-center px-3 py-2 mx-auto mb-3 font-semibold leading-6 transition duration-150 ease-in-out bg-select-green rounded-2xl hover:bg-opacity-75 active:bg-opacity-50"
         />
       </div>
