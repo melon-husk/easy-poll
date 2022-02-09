@@ -34,7 +34,12 @@ const Poll = () => {
         setQuestion(res.data.data.question);
         setOptions(res.data.data.options);
         setFetchingData(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new Error("Internal Server Error");
       });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady]);
   function handleSubmitPoll() {
@@ -42,9 +47,15 @@ const Poll = () => {
     setSubmitPoll(true);
     setSubmitting(true);
     votedOptions.forEach((option) => {
-      axios.patch("/api/poll?id=" + option).then((res) => {
-        setSubmitting(false);
-      });
+      axios
+        .patch("/api/poll?id=" + option)
+        .then((res) => {
+          setSubmitting(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          throw new Error("Internal Server Error");
+        });
     });
   }
   function isValid() {

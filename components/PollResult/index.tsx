@@ -21,7 +21,12 @@ const PollResult = ({ pollId }) => {
       .then((res) => {
         setPollData(res.data.data);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new Error("Internal Server Error");
       });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

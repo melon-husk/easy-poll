@@ -86,7 +86,11 @@ const CreatePoll = () => {
         options: state.pollOptions,
       })
       .then(() => setDeploying(false))
-      .then(() => router.push(`/poll/${state.pollId}`));
+      .then(() => router.push(`/poll/${state.pollId}`))
+      .catch((err) => {
+        console.log(err);
+        throw new Error("Internal Server Error");
+      });
   }
   // check if question and options are filled
   function isValid() {

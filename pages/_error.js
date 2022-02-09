@@ -1,5 +1,5 @@
 import NextErrorComponent from 'next/error';
-
+import Alert from "../components/Alert"
 import * as Sentry from '@sentry/nextjs';
 
 const MyError = ({ statusCode, hasGetInitialPropsRun, err }) => {
@@ -10,7 +10,8 @@ const MyError = ({ statusCode, hasGetInitialPropsRun, err }) => {
     Sentry.captureException(err);
     // Flushing is not required in this case as it only happens on the client
   }
-
+  console.log('inside error', statusCode)
+  return <Alert statusCode={statusCode}/>
   return <NextErrorComponent statusCode={statusCode} />;
 };
 

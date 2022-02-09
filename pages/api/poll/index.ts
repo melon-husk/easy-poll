@@ -14,7 +14,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { method } = req;
 
   await dbConnect();
-
+  // a function to send statusCode 500 50% of the time
+  if (Math.random() > 0.5) {
+    return res
+      .status(500)
+      .json({ success: false, error: "Internal Server Error" });
+  }
   switch (method) {
     case "GET":
       try {
