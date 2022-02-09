@@ -19,7 +19,6 @@ const initialState: State = {
   pollOptions: [],
 };
 function reducer(state: State, action: any) {
-  // console.log(state, action);
   switch (action.type) {
     case "SET_POLL_ID":
       return { ...state, pollId: action.payload };
@@ -86,17 +85,11 @@ const CreatePoll = () => {
         question: state.pollQuestion,
         options: state.pollOptions,
       })
-      .then((res) => console.log(res))
       .then(() => setDeploying(false))
       .then(() => router.push(`/poll/${state.pollId}`));
   }
   // check if question and options are filled
   function isValid() {
-    console.log(
-      state.pollQuestion.length > 0 &&
-        state.pollOptions.length > 0 &&
-        state.pollOptions.every((option) => option.text.length > 0)
-    );
     return (
       state.pollQuestion.length > 0 &&
       state.pollOptions.length > 0 &&

@@ -43,11 +43,9 @@ const Poll = () => {
     setSubmitting(true);
     votedOptions.forEach((option) => {
       axios.patch("/api/poll?id=" + option).then((res) => {
-        console.log(res);
         setSubmitting(false);
       });
     });
-    console.log(votedOptions);
   }
   function isValid() {
     return votedOptions.length > 0;

@@ -16,7 +16,6 @@ export default async function handler(
   const { method } = req;
 
   await dbConnect();
-  console.log(req.body, req.query);
 
   switch (method) {
     case "GET":
