@@ -89,7 +89,7 @@ const CreatePoll = () => {
       .then(() => router.push(`/poll/${state.pollId}`))
       .catch((err) => {
         console.log(err);
-        throw new Error("Internal Server Error");
+        throw new Error("Internal Server Error when deploying poll");
       });
   }
   // check if question and options are filled

@@ -37,7 +37,7 @@ const Poll = () => {
       })
       .catch((err) => {
         console.log(err);
-        throw new Error("Internal Server Error");
+        throw new Error("Internal Server Error when fetching poll data");
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,7 +54,7 @@ const Poll = () => {
         })
         .catch((err) => {
           console.log(err);
-          throw new Error("Internal Server Error");
+          throw new Error("Internal Server Error when submitting poll");
         });
     });
   }

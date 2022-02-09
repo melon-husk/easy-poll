@@ -24,7 +24,7 @@ const PollResult = ({ pollId }) => {
       })
       .catch((err) => {
         console.log(err);
-        throw new Error("Internal Server Error");
+        throw new Error("Internal Server Error when fetching poll result data");
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
