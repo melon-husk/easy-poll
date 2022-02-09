@@ -88,8 +88,8 @@ const CreatePoll = () => {
       .then(() => setDeploying(false))
       .then(() => router.push(`/poll/${state.pollId}`))
       .catch((err) => {
-        console.log(err);
-        throw new Error("Internal Server Error");
+        console.log("Creating new poll", err);
+        router.push(`/error`);
       });
   }
   // check if question and options are filled

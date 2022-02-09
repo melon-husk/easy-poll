@@ -1,5 +1,4 @@
 import NextErrorComponent from 'next/error';
-import Alert from "../components/Alert"
 import * as Sentry from '@sentry/nextjs';
 
 const MyError = ({ statusCode, hasGetInitialPropsRun, err }) => {
@@ -11,13 +10,11 @@ const MyError = ({ statusCode, hasGetInitialPropsRun, err }) => {
     // Flushing is not required in this case as it only happens on the client
   }
   console.log('inside error', statusCode)
-  return <Alert statusCode={statusCode}/>
   return <NextErrorComponent statusCode={statusCode} />;
 };
 
 MyError.getInitialProps = async (context) => {
   const errorInitialProps = await NextErrorComponent.getInitialProps(context);
-  
   const { res, err, asPath } = context;
 
   // Workaround for https://github.com/vercel/next.js/issues/8592, mark when

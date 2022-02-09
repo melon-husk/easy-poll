@@ -36,10 +36,9 @@ const Poll = () => {
         setFetchingData(false);
       })
       .catch((err) => {
-        console.log(err);
-        throw new Error("Internal Server Error");
+        console.log("Fetching poll data", err);
+        router.push(`/error`);
       });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady]);
   function handleSubmitPoll() {
@@ -53,8 +52,8 @@ const Poll = () => {
           setSubmitting(false);
         })
         .catch((err) => {
-          console.log(err);
-          throw new Error("Internal Server Error");
+          console.log("Submitting poll data", err);
+          router.push(`/error`);
         });
     });
   }

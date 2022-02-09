@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const PollResult = ({ pollId }) => {
   const initialPollData = {
@@ -10,6 +11,8 @@ const PollResult = ({ pollId }) => {
   };
   const [pollData, setPollData] = useState(initialPollData);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -23,8 +26,8 @@ const PollResult = ({ pollId }) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
-        throw new Error("Internal Server Error");
+        console.log("Poll Result", err);
+        router.push(`/error`);
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
