@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { withSentry } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Poll from "../../../models/Poll";
 import dbConnect from "../../../util/mongodb";
@@ -9,10 +10,7 @@ type Data = {
   error?: any;
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { method } = req;
 
   await dbConnect();
@@ -53,4 +51,5 @@ export default async function handler(
       res.status(400).json({ success: false, error: "Method not allowed" });
       break;
   }
-}
+};
+export default withSentry(handler);
