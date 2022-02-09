@@ -6,7 +6,7 @@
 
 const { withSentryConfig } = require('@sentry/nextjs');
 
-module.exports = {
+const moduleExports = {
   reactStrictMode: true,
 }
 
