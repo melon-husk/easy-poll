@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import EditableOptionItem from "../../components/EditableOptionItem";
 import Button from "../../components/Button";
+import * as Sentry from "@sentry/browser";
+
 interface PollOption {
   id: string;
   text: string;
@@ -87,6 +89,13 @@ const CreatePoll = () => {
       })
       .then(() => setDeploying(false))
       .then(() => router.push(`/poll/${state.pollId}`))
+      .then(() => {
+        Sentry.addBreadcrumb({
+          category: "deploy",
+          message: "Poll Deployed " + state.pollId,
+          level: Sentry.Severity.Info,
+        });
+      })
       .catch((err) => {
         console.log(err);
         throw new Error("Internal Server Error when deploying poll");
